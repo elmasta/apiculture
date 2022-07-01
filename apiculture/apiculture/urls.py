@@ -13,11 +13,17 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import os
 from django.contrib import admin
 from django.urls import path
 from blog import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('/', views.index)
+    path('', views.index, name="index"),
+    path('forum/', views.forum, name="forum"),
+    path('shop/', views.shop, name="shop"),
+    path('cours/', views.cours, name="cours")
+    # path admin to be changed in prod:
+    # path(str(os.getenv("ADMIN_LINK")), admin.site.urls)
 ]
