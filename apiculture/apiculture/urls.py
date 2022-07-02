@@ -23,7 +23,8 @@ urlpatterns = [
     path('', views.index, name="index"),
     path('forum/', views.forum, name="forum"),
     path('shop/', views.shop, name="shop"),
-    path('cours/', views.cours, name="cours")
+    path('cours/<int:cours_id>', views.cours, name="cours"),
+    path('cours-index/', views.cours_index, name="cours-index")
     # path admin to be changed in prod:
     # path(str(os.getenv("ADMIN_LINK")), admin.site.urls)
 ]

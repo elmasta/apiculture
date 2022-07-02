@@ -12,11 +12,15 @@
 <body>
     <header>
         <nav>
-            <ul>
+            <ul id="firstMenu">
                 <li><a href="{% url 'index' %}">ACCUEIL</a></li>
-                <li><a href="{% url 'cours' %}">COURS</a></li>
+                <li><a href="{% url 'cours-index' %}">COURS</a></li>
                 <li><a href="{% url 'forum' %}">FORUM</a></li>
                 <li><a href="{% url 'shop' %}">SHOP</a></li>
+            </ul>
+            <ul id="secondMenu">
+                <li><a href="{% url 'index' %}">Se connecter</a></li>
+                <li><a href="{% url 'index' %}">Se déconnecter</a></li>
             </ul>
         </nav>
     </header>

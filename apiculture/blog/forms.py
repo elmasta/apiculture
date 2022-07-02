@@ -20,3 +20,14 @@ class UserLoginForm(forms.Form):
         "class": "form-control"}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={
         "class": "form-control"}))
+
+class CreationCours(forms.Form):
+
+    class Meta:
+        model = Cours
+        fields = ["name", "teatching", "description"]
+        widgets = {
+            "name": forms.CharField(attrs={"class": "form-control"}),
+            "teatching": forms.TextInput(attrs={"class": "form-control"}),
+            "description": forms.TextInput(attrs={"class": "form-control"})
+        }

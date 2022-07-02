@@ -3,7 +3,21 @@
 {% load static %}
 
 {% block content %}
-{% for cours in list %}
-
-{% endfor %}
+<div id="cours_list_block">
+    {% for cours in list %}
+    <div id="{{ cours.id }}" class="cours_list">
+        <h2>
+            {{ cours.name }}
+        </h2>
+        <div class="desc_and_del">
+            <div class="desc">
+                {{ cours.description }}
+            </div>
+            <div>
+                <button type="submit" name="delete" value="{{ cours.id }}">Supprimer</button>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}
