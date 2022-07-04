@@ -14,14 +14,15 @@
         <nav>
             <ul id="firstMenu">
                 <li><a href="{% url 'index' %}">ACCUEIL</a></li>
-                <li><a href="{% url 'cours-index' %}">COURS</a></li>
+                <li><a href="{% url 'cours_index' %}">COURS</a></li>
                 <li><a href="{% url 'forum' %}">FORUM</a></li>
                 <li><a href="{% url 'shop' %}">SHOP</a></li>
             </ul>
+            {% if request.user.is_authenticated %}
             <ul id="secondMenu">
-                <li><a href="{% url 'index' %}">Se connecter</a></li>
-                <li><a href="{% url 'index' %}">Se déconnecter</a></li>
+                <li><a href="{% url 'user_logout' %}">Se déconnecter</a></li>
             </ul>
+            {% endif %}
         </nav>
     </header>
     <main>

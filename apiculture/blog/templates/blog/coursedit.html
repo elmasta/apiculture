@@ -3,5 +3,21 @@
 {% load static %}
 
 {% block content %}
-
+<form class="user" method="post">
+    {% csrf_token %}
+    <div>
+        <label for="{{ form.name.id_for_label }}">Nom du cours</label>
+        {{ form.name }}
+    </div>
+    <div>
+        <label for="{{ form.teatching.id_for_label }}">Contenu du cours</label>
+        {{ form.teatching }}
+    </div>
+    <div>
+        <label for="{{ form.description.id_for_label }}">Description du cours</label>
+        {{ form.description }}
+    </div>
+    <button type="submit" id="register">Enregistrer</button>
+    <button type="submit" id="publish">Publier</button>
+</form>
 {% endblock %}

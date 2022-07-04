@@ -1,0 +1,28 @@
+{% extends 'blog/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<div>
+    <h1>Connectez vous!</h1>
+</div>
+<form class="user" method="post">
+    {% csrf_token %}
+    <div>
+        <label for="{{ form.username.id_for_label }}">Pseudo</label>
+        {{ form.username }}
+    </div>
+    <div>
+        <label for="{{ form.password.id_for_label }}">Mot de passe</label>
+        {{ form.password }}
+    </div>
+    <button type="submit">Se connecter</button>
+</form>
+{% if errors %}
+    <div>{{ errors }}</div>
+{% endif %}
+<hr>
+<div>
+    <a href="">Mot de passe oublié?</a>
+</div>
+{% endblock %}

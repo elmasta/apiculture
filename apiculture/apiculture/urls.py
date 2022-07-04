@@ -21,10 +21,13 @@ from blog import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name="index"),
+    path('login/', views.login_page, name="login"),
+    path('logout/', views.user_logout, name='user_logout'),
     path('forum/', views.forum, name="forum"),
     path('shop/', views.shop, name="shop"),
     path('cours/<int:cours_id>', views.cours, name="cours"),
-    path('cours-index/', views.cours_index, name="cours-index")
+    path('cours_index/', views.cours_index, name="cours_index"),
+    path('cours_creation/', views.cours_creation, name="cours_creation")
     # path admin to be changed in prod:
     # path(str(os.getenv("ADMIN_LINK")), admin.site.urls)
 ]

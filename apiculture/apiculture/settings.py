@@ -80,6 +80,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+        # 'ENGINE': 'django.db.backends.postgresql',
+        # 'NAME': 'apiculture',
+        # 'USER': str(os.getenv("DBUSER")),
+        # 'PASSWORD': str(os.getenv("DBPASS")),
+        # 'HOST': '',
+        # 'PORT': '5432',
+        # 'ATOMIC_REQUESTS': True,
     }
 }
 

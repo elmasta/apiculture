@@ -3,6 +3,11 @@
 {% load static %}
 
 {% block content %}
+{% if request.user.is_authenticated %}
+<div>
+    <a href="{% url 'cours_creation' %}">Créer un cours</a>
+</div>
+{% endif %}
 <div id="cours_list_block">
     {% for cours in list %}
     <div id="{{ cours.id }}" class="cours_list">
@@ -14,8 +19,16 @@
                 {{ cours.description }}
             </div>
             <div>
-                <button type="submit" name="delete" value="{{ cours.id }}">Supprimer</button>
+                <a href="{% url 'cours' cours_id=cours.id %}">Consulter</a>
             </div>
+            {% if request.user.is_authenticated %}
+            <div>
+                <form class="user" method="post">
+                    {% csrf_token %}
+                    <button type="submit" name="delete" value="{{ cours.id }}">Supprimer</button>
+                </form>
+            </div>
+            {% endif %}
         </div>
     </div>
     {% endfor %}

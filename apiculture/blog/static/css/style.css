@@ -11,7 +11,7 @@ a{
     color: black;
 }
 
-header{
+header, footer{
     background-color: rgb(255, 225, 169);
 }
 
@@ -41,7 +41,6 @@ footer{
     width: 100%;
     display: flex;
     justify-content: center;
-    background-color: rgb(255, 225, 169);
     padding: 1rem 0;
 }
 
