@@ -1,4 +1,5 @@
 from blog.models import *
+from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
 from django.contrib.auth.models import User
 from django import forms
 
@@ -17,6 +18,6 @@ class CreationCoursForm(forms.ModelForm):
         fields = ["name", "teatching", "description"]
         widgets = {
             "name": forms.TextInput(attrs={"class": "form-control"}),
-            "teatching": forms.TextInput(attrs={"class": "form-control"}),
+            "teatching": SummernoteWidget(attrs={"class": "form-control"}),
             "description": forms.TextInput(attrs={"class": "form-control"}),
         }

@@ -1,0 +1,23 @@
+#cours_list_block{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cours_list{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2rem 0;
+}
+
+.desc_and_del{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.desc{
+    word-break: break-word;
+}

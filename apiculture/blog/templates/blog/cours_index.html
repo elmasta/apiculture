@@ -3,6 +3,7 @@
 {% load static %}
 
 {% block content %}
+<link rel="stylesheet" href="{% static 'css/cours_index.css' %}" />
 {% if request.user.is_authenticated %}
 <div>
     <a href="{% url 'cours_creation' %}">Créer un cours</a>
@@ -25,6 +26,8 @@
             <div>
                 <form class="user" method="post">
                     {% csrf_token %}
+                    <button type="submit" name="modify" value="{{ cours.id }}">Modifier</button>
+                    <button type="submit" name="unpublished" value="{{ cours.id }}">Dépublier</button>
                     <button type="submit" name="delete" value="{{ cours.id }}">Supprimer</button>
                 </form>
             </div>

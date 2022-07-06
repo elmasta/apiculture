@@ -3,3 +3,4 @@ apiculture/db.sqlite3
 apiculture/apiculture/__pycache__/
 apiculture/blog/__pycache__/
 apiculture/blog/migrations/__pycache__/
+!env/Lib/django_summernote/static/summernote/summernote.min.css
