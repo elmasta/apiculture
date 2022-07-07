@@ -1,0 +1,34 @@
+{% extends 'blog/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital@1&display=swap" rel="stylesheet">
+<form action="{% url 'search_result' %}" role="form" method="GET">
+    <div class="search-box">
+        <div>
+            <select name="search-box" id="">
+                <option value="Everything">Tout rechercher</option>
+                <option value="Titles">Titre</option>
+                <option value="Descriptions">Descriptions</option>
+            </select>
+            <input type="text" name="q" placeholder="Recherche">
+            <button type="submit" name="search"><i class="fa fa-search"></i></button>
+        </div>
+    </div>
+</form>
+<div>
+    <a href="">Créer un sujet</a>
+</div>
+{% if messages %}
+{% for message in messages %}
+<div style="background-color:#fff;color:#000;font-weight:bolder;padding:20px;width:100%;"> {{message}} </div>
+{% endfor %}
+{% endif %}
+{% block forum %}{% endblock forum %}
+<div style="margin-bottom: 150px;"></div>
+<script src="{% static 'main.js' %}"></script>
+{% endblock content %}

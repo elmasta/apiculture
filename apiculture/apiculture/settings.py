@@ -40,7 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_summernote',
-    'blog'
+    'hitcount',
+    'crispy_forms',
+    'blog',
+    'forum',
 ]
 
 MIDDLEWARE = [

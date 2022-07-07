@@ -21,20 +21,15 @@ from django.urls import path, include
 from blog import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('', views.index, name="index"),
-    path('login/', views.login_page, name="login"),
-    path('logout/', views.user_logout, name='user_logout'),
-    path('forum/', views.forum, name="forum"),
-    path('shop/', views.shop, name="shop"),
-    path('cours/<int:cours_id>', views.cours, name="cours"),
-    path('cours_index/', views.cours_index, name="cours_index"),
-    path('cours_creation/', views.cours_creation, name="cours_creation"),
-    # path('user_game_page/<int:game_id>', views.user_game_page, name='user_game_page'),
+    path('blog/', include('blog.urls')),
+    path('forum/', include('forum.urls')),
     path('summernote/', include('django_summernote.urls')),
-    # path admin to be changed in prod:
-    # path(str(os.getenv("ADMIN_LINK")), admin.site.urls)
+    path('hitcount/', include('hitcount.urls', namespace='hitcount'))
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns.append(path('admin/', admin.site.urls))
+else:
+    urlpatterns.append(path(str(os.getenv("ADMIN_LINK")), admin.site.urls))
