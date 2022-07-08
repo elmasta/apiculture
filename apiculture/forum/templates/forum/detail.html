@@ -5,8 +5,8 @@
 <div class="container">
     <!--Navigation-->
     <div class="navigate">
-        <span><a href="{% url 'forum' %}">MyForum - Forums</a> >> <a
-                href="{{post.categories.all.0.get_url}}">{{post.categories.all.0}}</a> >> <a
+        <span><a href="{% url 'forum' %}">Forum</a> >> <a
+                href="{{post.categories.get_url}}">{{post.categories}}</a> >> <a
                 href="{{post.get_url}}">{{post.title}}</a></span>
     </div>
 
@@ -14,8 +14,8 @@
     <div class="topic-container">
         <!--Original thread-->
         <div class="head">
-            <div class="authors">Author</div>
-            <div class="content">Topic: {{post.title}} (Read {% get_hit_count for post %} Times)</div>
+            <div class="authors">Auteur</div>
+            <div class="content">Sujet: {{post.title}} (Read {% get_hit_count for post %} Times)</div>
         </div>
 
         <div class="body">
@@ -26,85 +26,29 @@
             </div>
             <div class="content">
                 {{post.content|safe}}
-                <br>
-                <div class="comment">
-                    <button onclick="showComment()">Comment</button>
-                </div>
             </div>
         </div>
-    </div>
-
-
-    <!--Comment Area-->
-    {% if post.closed == True %}
-    <div style="background-color:#fff;color:#000;font-weight:bolder;padding:20px;width:100%;"> This Topic Is Closed!
-    </div>
-    {% else %}
-    {% if request.user.is_authenticated %}
-    <form action="." method="post">
-        {% csrf_token %}
-        <div class="comment-area hide" id="comment-area">
-            <textarea name="comment" id="" placeholder="comment here ... "></textarea>
-            <input type="submit" value="submit" name="comment-form">
-        </div>
-    </form>
-    {% else %}
-    <div style="background-color:#fff;color:#000;font-weight:bolder;padding:20px;width:100%;"> You need to <a
-            href="{% url 'signin' %}"><b>login</b></a> to comment or reply.! </div>
-    {% endif %}
-    {% endif %}
-
-    <!--Comments Section-->
-
-    {% for comment in post.comments.all %}
-    <div class="comments-container">
+        {% for reply in replies %}
         <div class="body">
             <div class="authors">
-                <div class="username"><a href="">{{comment.user.fullname|title}}</a></div>
+                <div class="username"><a href="">{{reply.user.username|title}}</a></div>
                 <div>Role</div>
-                <img src="{{comment.user.profile_pic.url}}" alt="">
-                <div>Posts: <u>{{comment.user.num_posts}}</u></div>
-                <div>Points: <u>{{comment.user.points}}</u></div>
+                <div>Posts: <u>{{post.user.num_posts}}</u></div>
             </div>
             <div class="content">
-                {{comment.content}}
-                <br>
-                {% if request.user.is_authenticted %}
-                <div class="comment">
-                    <button onclick="showReplies('comment{{comment.id}}')">Reply</button>
-                </div>
-                {% endif %}
+                {{reply.content|safe}}
             </div>
         </div>
+        {% endfor %}
     </div>
-    <!--Reply Area-->
-    <form action="." method="post">
-        {% csrf_token %}
-        <div class="comment-area hide" id="comment{{comment.id}}">
-            <textarea name="reply" id="" placeholder="reply here ... "></textarea>
-            <input type="submit" value="submit" name="reply-form">
-            <input type="hidden" name="comment-id" value="{{comment.id}}">
-        </div>
-    </form>
-
-    <!--Reply section-->
-    {% for reply in comment.replies.all %}
-    <div class="comments-container" style="width: 95%; margin-left:5%;">
-        <div class="body">
-            <div class="authors">
-                <div class="username"><a href="">{{reply.user.fullname|title}}</a></div>
-                <div>Role</div>
-                <img src="{{reply.user.profile_pic.url}}" alt="">
-                <div>Posts: <u>{{reply.user.num_posts}}</u></div>
-                <div>Points: <u>{{reply.user.points}}</u></div>
-            </div>
-            <div class="content">
-                {{reply.content}}
-                <br>
-            </div>
-        </div>
+    <!--Pagination starts-->
+    
+    <div class="pagination">
+        pages: {% for num_page in replies.paginator.page_range %} <a href="?page={{num_page}}">{{num_page}}</a>
+        {% endfor %}
     </div>
-    {% endfor %}
-    {% endfor %}
+    
+    <!--pagination ends-->
 </div>
+{{ block.super }}
 {% endblock forum %}

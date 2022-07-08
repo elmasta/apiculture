@@ -4,7 +4,7 @@
 <div class="container">
     <!--Navigation-->
     <div class="navigate">
-        <span><a href="{% url 'forum' %}">Forum</a> >> <a href="{{forum.get_url}}">{{forum.title}}</a></span>
+        <span><a href="{% url 'forum' %}">Forum</a> >> <a href="{{default_page}}">{{forum.title}}</a></span>
     </div>
     {% if posts %}
     <!--Display posts table-->
@@ -72,4 +72,5 @@
     {% endif %}
     <!--pagination ends-->
 </div>
+{{ block.super }}
 {% endblock forum %}

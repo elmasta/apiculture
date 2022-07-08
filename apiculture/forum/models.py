@@ -65,9 +65,6 @@ class Post(models.Model):
             "slug":self.slug
         })
 
-    @property
-    def last_reply(self):
-        return self.comments.latest("date")
 
 # réponse à un topic
 class Reply(models.Model):

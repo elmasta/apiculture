@@ -1,8 +1,10 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_list_or_404, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from blog.models import *
 from blog.forms import *
+
 
 def index(request):
 
@@ -11,6 +13,7 @@ def index(request):
         return render(
             request, 'blog/index.html')
     return render(request, 'blog/index.html')
+
 
 def login_page(request):
 
@@ -36,12 +39,14 @@ def login_page(request):
     context["form"] = form
     return render(request, "blog/login.html", context)
 
+
 def user_logout(request):
     """view used to logout the user"""
 
     if request.user.is_authenticated:
         logout(request)
     return redirect("index")
+
 
 def cours(request, cours_id):
 
@@ -50,15 +55,27 @@ def cours(request, cours_id):
     context = {"cours" : current_cours}
     return render(request, 'blog/cours.html', context)
 
+
 def cours_index(request):
     
     context = {}
     if request.user.is_authenticated:
         if request.method == "POST":
             None
-    cours = Cours.objects.all()
+    cours = get_list_or_404(Cours.objects.all().order_by("created_at"))
+    paginator = Paginator(cours, 2)
+    page = request.GET.get('page')
+    cours = paginator.get_page(page)
+    
+    # try:
+    #     cours = paginator.page(page)
+    # except PageNotAnInteger:
+    #     cours = paginator.page(1)
+    # except EmptyPage:
+    #     cours = paginator.page(paginator.num_pages)
     context["list"] = cours
     return render(request, 'blog/cours_index.html', context)
+
 
 def cours_creation(request):
     
@@ -79,8 +96,6 @@ def cours_creation(request):
         return render(request, 'blog/coursedit.html', context)
     return redirect("index")
 
-def forum(request):
-    return render(request, 'blog/index.html')
 
 def shop(request):
     return render(request, 'blog/index.html')

@@ -36,4 +36,14 @@
     </div>
     {% endfor %}
 </div>
+{% if list.has_previous %}
+    <div class="pagination">
+        <p>avant</p>
+    </div>
+{% endif %}
+{% if list.has_next %}
+    <div class="pagination">
+        <p>après</p>
+    </div>
+{% endif %}
 {% endblock %}
