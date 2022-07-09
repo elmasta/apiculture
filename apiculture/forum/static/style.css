@@ -8,12 +8,10 @@
 html{
     font-size: 14px;
     font-family: 'Titillium Web', sans-serif;
-    background-color:rgb(0,0,0);
     color:#FEFEFE;
 }
 
 a{
-    color:#FF0042;
     font-weight: bolder;
     text-decoration: none;
 }
@@ -45,14 +43,14 @@ h1{
 
 .subforum-row{
     display: grid;
-    grid-template-columns: 7% 60% 13% 20%;
+    grid-template-columns: 67% 13% 20%;
 }
 
 .subforum-column{
     padding: 10px;
     margin:4px;
     border-radius: 5px;
-    background-color:#111314;
+    background-color: rgba(250, 250, 144, .3);
 }
 
 .subforum-description *{
@@ -123,11 +121,7 @@ h1{
     }
 
   }
-/*   Header Section    */
 
-header{
-    margin-inline: 10px;
-}
   /* Nav Bar styles */
 .navbar{
     display:flex;
@@ -221,12 +215,10 @@ header{
 
   /* Search Box styles */
 .search-box{
-    border: solid 1px #52057b;
     margin-top: 20px;
     padding: 40px;
     display:flex;
     justify-content: center;
-    box-shadow:1px 2px 3px #52057b;
 }
 
 .search-box select{
@@ -261,21 +253,15 @@ header{
 /* forum info Styling */
 .forum-info{
     padding: 20px;
-    background-color: #111314;
+    background-color: rgba(250, 250, 144, .3);
+    position: fixed;
+    bottom: 70px;
+    width: 100%;
 }
 
 .chart{
     font-size:20px;
     font-weight:bold;
-}
-/* Footer Styling */
-
-footer{
-    margin-top: 20px;
-    padding: 20px;
-    background-color:  #52057b;
-    display: block;
-    text-align: center;
 }
 
 /* ########################################### */
@@ -454,10 +440,21 @@ footer{
     border: solid 1px #000000;
 }
 
+/* custom code: */
+.forumLink{
+    color: rgb(255, 255, 194);
+}
 
-
-
-
+#createSubject{
+    background-color:rgba(96, 255, 75, 0.603);
+    width: 8%;
+    display: flex;
+    justify-content: center;
+    margin-left: 2px;
+    margin-bottom: 20px;
+    padding: 0.5rem 0;
+    border-radius: 5px;
+}
 
 
 

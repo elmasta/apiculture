@@ -1,5 +1,6 @@
 .backYel{
-    background-color: rgb(250, 250, 144);
+    background-color: rgba(250, 250, 144, .3);
+    color: white;
 }
 
 .line{

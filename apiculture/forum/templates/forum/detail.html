@@ -20,18 +20,19 @@
 
         <div class="body">
             <div class="authors">
-                <div class="username"><a href="">{{post.user.username|title}}</a></div>
+                <div class="username"><a class="forumLink" href="">{{post.user.username|title}}</a></div>
                 <div>Role</div>
                 <div>Posts: <u>{{post.user.num_posts}}</u></div>
             </div>
             <div class="content">
+                <p style="color:aqua">Ceci est le premier post du topic</p>
                 {{post.content|safe}}
             </div>
         </div>
         {% for reply in replies %}
         <div class="body">
             <div class="authors">
-                <div class="username"><a href="">{{reply.user.username|title}}</a></div>
+                <div class="username"><a class="forumLink" href="">{{reply.user.username|title}}</a></div>
                 <div>Role</div>
                 <div>Posts: <u>{{post.user.num_posts}}</u></div>
             </div>

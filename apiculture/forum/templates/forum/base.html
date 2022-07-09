@@ -20,15 +20,11 @@
         </div>
     </div>
 </form>
-<div>
-    <a href="">Créer un sujet</a>
-</div>
 {% if messages %}
 {% for message in messages %}
 <div style="background-color:#fff;color:#000;font-weight:bolder;padding:20px;width:100%;"> {{message}} </div>
 {% endfor %}
 {% endif %}
 {% block forum %}{% endblock forum %}
-<div style="margin-bottom: 150px;"></div>
 <script src="{% static 'main.js' %}"></script>
 {% endblock content %}

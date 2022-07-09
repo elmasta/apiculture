@@ -36,14 +36,18 @@
     </div>
     {% endfor %}
 </div>
+<div>
+    pages: {% for num_page in list.paginator.page_range %} <a href="?page={{num_page}}">{{num_page}}</a>
+    {% endfor %}
+</div>
 {% if list.has_previous %}
     <div class="pagination">
-        <p>avant</p>
+        <a href="{% url 'cours_index'%}?page={{ list.previous_page_number }}">page précédente</a>
     </div>
 {% endif %}
 {% if list.has_next %}
     <div class="pagination">
-        <p>après</p>
+        <a href="{% url 'cours_index'%}?page={{ list.next_page_number }}">page suivante</a>
     </div>
 {% endif %}
 {% endblock %}

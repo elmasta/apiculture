@@ -63,7 +63,7 @@ def cours_index(request):
         if request.method == "POST":
             None
     cours = get_list_or_404(Cours.objects.all().order_by("created_at"))
-    paginator = Paginator(cours, 2)
+    paginator = Paginator(cours, 1)
     page = request.GET.get('page')
     cours = paginator.get_page(page)
     

@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render, get_object_or_404
+from django.shortcuts import redirect, render, get_object_or_404, get_list_or_404
 from forum.models import Category, Post, Reply
 from forum.utils import update_views
 from forum.forms import PostForm
@@ -28,49 +28,42 @@ def forum(request):
     return render(request, "forum/forums.html", context)
 
 
-@login_required
-def detail(request, slug, p="1"):
+def detail(request, slug):
+    # if request.user.is_authenticated:
+    #     if request.method == "POST":
+    #         None
+    #     else:
+    #         None
     topic = get_object_or_404(Post, slug=slug)
     replies = Reply.objects.filter(post=topic.id).order_by("date")
     paginator = Paginator(replies, 3)
-    try:
-        replies = paginator.page(p)
-    except PageNotAnInteger:
-        replies = paginator.page(1)
-    except EmptyPage:
-        replies = paginator.page(paginator.num_pages)
+    page = request.GET.get('page')
+    replies = paginator.get_page(page)
     if "reply-form" in request.POST:
         reply = request.POST.get("reply")
     context = {
         "category": topic.categories.title,
         "post": topic,
         "replies": replies,
-        "default_page": "1",
         "title": "OZONE: " + topic.title,
     }
     update_views(request, topic)
     return render(request, "forum/detail.html", context)
 
 
-def posts(request, slug, p="1"):
+def posts(request, slug):
 
-    max_page = 0
     category = get_object_or_404(Category, slug=slug)
-    posts = Post.objects.filter(approved=True, categories=category).order_by('date')
+    posts = get_list_or_404(Post.objects.filter(approved=True, categories=category).order_by('date'))
+    print(type(posts))
+    for i in posts:
+        i.num_comments = len(Reply.objects.filter(post=i.id))
     paginator = Paginator(posts, 3)
-    # for i in paginator:
-    #     max_page += 1
-    # print(paginator)
-    try:
-        posts = paginator.page(p)
-    except PageNotAnInteger:
-        posts = paginator.page(1)
-    except EmptyPage:
-        posts = paginator.page(paginator.num_pages)
+    page = request.GET.get('page')
+    posts = paginator.get_page(page)
     context = {
         "posts": posts,
         "forum": category,
-        "default_page": "1",
         "title": "OZONE: Posts"
     }
 

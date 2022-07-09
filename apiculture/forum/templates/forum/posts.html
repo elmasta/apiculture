@@ -6,6 +6,9 @@
     <div class="navigate">
         <span><a href="{% url 'forum' %}">Forum</a> >> <a href="{{default_page}}">{{forum.title}}</a></span>
     </div>
+    <div id="createSubject">
+        <a href="">Créer un sujet</a>
+    </div>
     {% if posts %}
     <!--Display posts table-->
     <div class="posts-table">
@@ -64,12 +67,10 @@
 
     </div>
     <!--Pagination starts-->
-    {% if posts.is_paginated %}
     <div class="pagination">
         pages: {% for num_page in posts.paginator.page_range %} <a href="?page={{num_page}}">{{num_page}}</a>
         {% endfor %}
     </div>
-    {% endif %}
     <!--pagination ends-->
 </div>
 {{ block.super }}
