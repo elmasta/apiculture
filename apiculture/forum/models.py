@@ -6,6 +6,22 @@ from django.contrib.contenttypes.fields import GenericRelation
 from django.shortcuts import reverse
 
 
+class Member(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    ip = models.CharField(max_length=30)
+    is_moderator = models.BooleanField(default=False)
+    is_banned = models.BooleanField(default=False)
+
+    @property
+    def num_posts(self):
+        return Post.objects.filter(user=self).count()
+
+    def __str__(self):
+        return self.user.username
+
+class Banned_IP(models.Model):
+    ip = models.CharField(max_length=30)
+
 class Category(models.Model):
     title = models.CharField(max_length=50)
     slug = models.SlugField(max_length=400, unique=True, blank=True)
@@ -42,7 +58,7 @@ class Category(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=400)
     slug = models.SlugField(max_length=400, unique=True, blank=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(Member, on_delete=models.CASCADE)
     content = models.TextField()
     categories = models.ForeignKey(Category, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
@@ -69,7 +85,7 @@ class Post(models.Model):
 # réponse à un topic
 class Reply(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(Member, on_delete=models.CASCADE)
     content = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
 

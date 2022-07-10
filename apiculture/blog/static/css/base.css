@@ -4,10 +4,9 @@
     list-style-type: none;
 }
 
-main{
-    background: url("/static/img/1657138795327.jpg") no-repeat;
+body{
+    background: url("/static/img/1657138795135.jpg") no-repeat;
     background-size: cover;
-    height: 100vh;
 }
 
 a{
@@ -47,4 +46,8 @@ footer{
     display: flex;
     justify-content: center;
     padding: 1rem 0;
+}
+
+.formButton{
+    padding: 0.25rem 0.5rem;
 }

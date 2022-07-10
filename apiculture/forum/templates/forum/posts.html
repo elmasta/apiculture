@@ -23,23 +23,25 @@
         <div class="table-row">
 
             {% if post.closed == True %}
-            <div class="status"><i class="fa fa-lock"></i></div>
-            {% elif post.num_comments == 0 %}
-            <div class="status"><i class="fa fa-frown-o"></i></div>
-            {% elif post.num_comments > 0 and post.num_comments < 2 %}
-            <div class="status"><i class="fa fa-book"></i></div>
-            {% elif post.num_comments > 2 and post.num_comments < 4 %}
-            <div class="status"><i class="fa fa-rocket"></i></div>
-            {% elif post.num_comments >= 4 %}
-            <div class="status"><i class="fa fa-fire"></i></div>
-
+            <div class="status">
+                <i class="fa fa-lock"></i>
+                {% if post.closed == True %}
+                <button>Ouvrir le sujet</button>
+                {% endif %}
+            </div>
+            {% else %}
+            <div class="status">
+                <i class="fa fa-unlock-alt"></i>
+                {% if post.closed == False %}
+                <button>Clore le sujet</button>
+                {% endif %}
+            </div>
             {% endif %}
-
 
             <div class="subjects">
                 <a href="{{post.get_url}}">{{post.title}}</a>
                 <br>
-                <span>Débuté par <b><a href="">{{post.user.username|title}}</a></b> .</span>
+                <span>Débuté par <b><a href="">{{post.user.user.username|title}}</a></b> .</span>
             </div>
             <div class="replies">
                 {{post.num_comments}} réponses <br> Vue {% get_hit_count for post %} fois.
@@ -47,13 +49,13 @@
 
             {% if post.last_reply %}
             <div class="last-reply">
-                {{post.last_reply.date|date}}
+                le {{post.last_reply.date|date}}
                 <br>Par <b><a href="">{{post.last_reply.user.username|title}}</a></b>
             </div>
             {% else %}
             <div class="last-reply">
-                {{post.date|date}}
-                <br>Par <b><a href="">{{post.user.username|title}}</a></b>
+                le {{post.date|date}}
+                <br>Par <b><a href="">{{post.user.user.username|title}}</a></b>
             </div>
             {% endif %}
         </div>

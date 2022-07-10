@@ -97,5 +97,6 @@ def cours_creation(request):
     return redirect("index")
 
 
-def shop(request):
-    return render(request, 'blog/index.html')
+# def shop(request):
+
+#     return render(request, 'blog/index.html')

@@ -22,7 +22,7 @@
                 {% if forum.last_post %}
                 <b><a href="{{forum.last_post.get_url}}">Dernier message</a></b> par <a
                     href="">{{forum.last_post.user.username|title}}</a>
-                <br>on <small>{{forum.last_post.date|date}}</small>
+                <br>le <small>{{forum.last_post.date|date}}</small>
                 {% else %}
                 <span>Aucun message dans cette catégorie.</span>
                 {% endif %}
@@ -45,13 +45,12 @@
 <!-- Forum Info -->
 <div class="forum-info">
     <div class="chart">
-        MyForum - Stats &nbsp;<i class="fa fa-bar-chart"></i>
+        Statistiques du forum &nbsp;<i class="fa fa-bar-chart"></i>
     </div>
-    <span><u>{{num_posts}}</u> Posts in <u>{{num_categories}}</u> Categories by <u>{{num_users}}</u> Members.</span><br>
+    <span><u>{{num_posts}}</u> sujet(s) dans <u>{{num_categories}}</u> Catégorie(s) par <u>{{num_users}}</u> Membres.</span><br>
     {% if forums %}
-    <span>Latest post: <b><a href="{{last_post.get_url}}">{{last_post.title}}</a></b> on {{last_post.date|date}} By <a
-            href="">{{last_post.user.fullname|title}}</a></span>.<br>
-    <span>Check <a href="{% url 'latest_posts' %}">the latest posts</a> .</span><br>
+    <span>Dernier sujet: <b><a href="{{last_post.get_url}}">{{last_post.title}}</a></b> le {{last_post.date|date}} par <a
+            href="">{{last_post.user.user.username|title}}</a></span>.<br>
     {% endif %}
 </div>
 {{ block.super }}

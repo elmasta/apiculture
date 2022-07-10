@@ -12,7 +12,7 @@ class PostForm(forms.ModelForm):
         }
 
 
-class Reply(forms.ModelForm):
+class ReplyForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ["content"]

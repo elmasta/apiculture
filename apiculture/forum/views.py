@@ -1,10 +1,12 @@
 from django.shortcuts import redirect, render, get_object_or_404, get_list_or_404
-from forum.models import Category, Post, Reply
+from forum.models import Category, Post, Reply, Banned_IP
 from forum.utils import update_views
-from forum.forms import PostForm
+from forum.forms import PostForm, ReplyForm
+from blog.views import index
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+import forum.func as func
 
 
 def forum(request):
@@ -12,20 +14,25 @@ def forum(request):
     num_posts = Post.objects.all().count()
     num_users = User.objects.all().count()
     num_categories = forums.count()
+    ip_client = func.get_client_ip(request)
     try:
-        last_post = Post.objects.latest("date")
+        Banned_IP.objects.get(ip=ip_client)
+        return redirect("index")
     except:
-        last_post = []
+        try:
+            last_post = Post.objects.latest("date")
+        except:
+            last_post = []
 
-    context = {
-        "forums": forums,
-        "num_posts": num_posts,
-        "num_users": num_users,
-        "num_categories": num_categories,
-        "last_post": last_post,
-        "title": "OZONE forum app"
-    }
-    return render(request, "forum/forums.html", context)
+        context = {
+            "forums": forums,
+            "num_posts": num_posts,
+            "num_users": num_users,
+            "num_categories": num_categories,
+         "last_post": last_post,
+            "title": "OZONE forum app"
+        }
+        return render(request, "forum/forums.html", context)
 
 
 def detail(request, slug):
@@ -35,17 +42,17 @@ def detail(request, slug):
     #     else:
     #         None
     topic = get_object_or_404(Post, slug=slug)
+    form = ReplyForm()
     replies = Reply.objects.filter(post=topic.id).order_by("date")
-    paginator = Paginator(replies, 3)
+    paginator = Paginator(replies, 10)
     page = request.GET.get('page')
     replies = paginator.get_page(page)
-    if "reply-form" in request.POST:
-        reply = request.POST.get("reply")
     context = {
         "category": topic.categories.title,
         "post": topic,
         "replies": replies,
         "title": "OZONE: " + topic.title,
+        "form": form,
     }
     update_views(request, topic)
     return render(request, "forum/detail.html", context)
@@ -55,7 +62,6 @@ def posts(request, slug):
 
     category = get_object_or_404(Category, slug=slug)
     posts = get_list_or_404(Post.objects.filter(approved=True, categories=category).order_by('date'))
-    print(type(posts))
     for i in posts:
         i.num_comments = len(Reply.objects.filter(post=i.id))
     paginator = Paginator(posts, 3)
@@ -87,24 +93,24 @@ def create_post(request):
         "title": "OZONE: Créez un nouveau topic."
     })
     return render(request, "forum/create_post.html", context)
-
-
-def reply(request, id):
-    if request.user.is_authenticated:
-        None
-    return redirect("forum")
     
 
-def latest_posts(request):
-    posts = Post.objects.all().filter(approved=True)[:10]
-    context = {
-        "posts": posts,
-        "title": "OZONE: Les 10 derniers topic."
-    }
+# not used
+# def latest_posts(request):
+#     posts = Post.objects.all().filter(approved=True)[:10]
+#     context = {
+#         "posts": posts,
+#         "title": "OZONE: Les 10 derniers topic."
+#     }
 
-    return render(request, "forum/latest-posts.html", context)
+#     return render(request, "forum/latest-posts.html", context)
 
 
 def search_result(request):
 
     return render(request, "forum/search.html")
+
+
+def forum_admin(request):
+
+    None

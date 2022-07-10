@@ -5,9 +5,8 @@
 <div class="container">
     <!--Navigation-->
     <div class="navigate">
-        <span><a href="{% url 'forum' %}">Forum</a> >> <a
-                href="{{post.categories.get_url}}">{{post.categories}}</a> >> <a
-                href="{{post.get_url}}">{{post.title}}</a></span>
+        <span><a href="{% url 'forum' %}">Forum</a> >> <a href="{{post.categories.get_url}}">{{post.categories}}</a> >>
+            <a href="{{post.get_url}}">{{post.title}}</a></span>
     </div>
 
     <!--Topic Section-->
@@ -20,9 +19,14 @@
 
         <div class="body">
             <div class="authors">
-                <div class="username"><a class="forumLink" href="">{{post.user.username|title}}</a></div>
-                <div>Role</div>
-                <div>Posts: <u>{{post.user.num_posts}}</u></div>
+                <div class="username forumLink">{{post.user.user.username|title}}</div>
+                {% if post.user.is_moderator %}
+                <div>Role: Modérateur</div>
+                {% elif post.user.is_banned %}
+                <div>Utilisateur banni</div>
+                {% else %}
+                <div>Role: Utilisateur</div>
+                {% endif %}
             </div>
             <div class="content">
                 <p style="color:aqua">Ceci est le premier post du topic</p>
@@ -32,23 +36,39 @@
         {% for reply in replies %}
         <div class="body">
             <div class="authors">
-                <div class="username"><a class="forumLink" href="">{{reply.user.username|title}}</a></div>
-                <div>Role</div>
-                <div>Posts: <u>{{post.user.num_posts}}</u></div>
+                {% if reply.user.is_moderator %}
+                <div class="username forumLink">{{reply.user.user.username|title}}</div>
+                <div>Role: Modérateur</div>
+                {% elif reply.user.is_banned %}
+                <div class="username forumLink" style="color:gray">{{reply.user.user.username|title}}</div>
+                <div>Utilisateur banni</div>
+                {% else %}
+                <div class="username forumLink">{{reply.user.user.username|title}}</div>
+                <div>Role: Utilisateur</div>
+                {% endif %}
             </div>
             <div class="content">
                 {{reply.content|safe}}
             </div>
         </div>
         {% endfor %}
+        <div class="body">
+            <form class="summernote" method="post">
+                {% csrf_token %}
+                <div class="summernote">
+                    <label for="{{ form.content.id_for_label }}">Répondre au sujet</label>
+                    {{ form.content }}
+                </div>
+                <button type="submit" id="send" class="formButton">Envoyer</button>
+            </form>
+        </div>
     </div>
+
     <!--Pagination starts-->
-    
     <div class="pagination">
         pages: {% for num_page in replies.paginator.page_range %} <a href="?page={{num_page}}">{{num_page}}</a>
         {% endfor %}
     </div>
-    
     <!--pagination ends-->
 </div>
 {{ block.super }}
