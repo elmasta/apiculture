@@ -61,20 +61,29 @@ def cours_index(request):
     context = {}
     if request.user.is_authenticated:
         if request.method == "POST":
-            None
-    cours = get_list_or_404(Cours.objects.all().order_by("created_at"))
-    paginator = Paginator(cours, 1)
-    page = request.GET.get('page')
-    cours = paginator.get_page(page)
-    
-    # try:
-    #     cours = paginator.page(page)
-    # except PageNotAnInteger:
-    #     cours = paginator.page(1)
-    # except EmptyPage:
-    #     cours = paginator.page(paginator.num_pages)
-    context["list"] = cours
-    return render(request, 'blog/cours_index.html', context)
+            if request.POST.get("delete"):
+                Cours.objects.get(id=request.POST.get("delete")).delete()
+            elif request.POST.get("published"):
+                modif_cours = Cours.objects.get(id=request.POST.get("published"))
+                modif_cours.published = True
+                modif_cours.save()
+    if request.user.is_superuser:
+        cours = Cours.objects.all().order_by("created_at")
+    else:
+        cours = Cours.objects.exclude(published=False).order_by("created_at")
+    if cours:
+        paginator = Paginator(cours, 1)
+        page = request.GET.get('page')
+        try:
+            cours = paginator.page(page)
+        except PageNotAnInteger:
+            cours = paginator.page(1)
+        except EmptyPage:
+            cours = paginator.page(paginator.num_pages)
+        context["list"] = cours
+        return render(request, 'blog/cours_index.html', context)
+    else:
+        return redirect("index")
 
 
 def cours_creation(request):

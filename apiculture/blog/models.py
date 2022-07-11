@@ -1,11 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# class Profile(models.Model):
-#     user = models.OneToOneField(User, on_delete=models.CASCADE)
-#     profil_picture = models.ImageField(upload_to=get_userpic_path, blank=True,
-#                                        null=True,
-#                                        validators=[validate_picture])
 
 class Cours(models.Model):
 
@@ -13,7 +8,20 @@ class Cours(models.Model):
         return f'{self.name}'
 
     name = models.CharField(max_length=100, null=False)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     teatching = models.TextField(null=False)
+    description = models.TextField(blank=True, null=True)
+    published = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+class Event(models.Model):
+
+    def __str__(self):
+        return f'{self.name}'
+
+    name = models.CharField(max_length=100, null=False)
     description = models.TextField(blank=True, null=True)
     published = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)

@@ -3,35 +3,30 @@
 {% load static %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/index.css' %}" />
-<div class="line">
-    <div class="lineElem">
-        <img>
+<div class="container">
+    <div class="line lone">
+        PRESENTATION Lorem ipsum, dolor sit amet consectetur adipisicing elit. Recusandae
+        non
+        aliquid quod minima architecto laudantium quidem sit voluptate aut blanditiis culpa iusto ullam ex, eius
+        officia
+        pariatur, delectus similique consequuntur.
     </div>
-    <div class="lineElem">
-        <h1>Nom</h1>
+    <div class="line lone">
+        <div class="description">
+            Description des cours Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+            Recusandae non aliquid quod
+            minima architecto laudantium quidem sit voluptate aut blanditiis culpa iusto ullam ex, eius officia
+            pariatur,
+            delectus similique consequuntur.</div>
+        <div class="link">
+            <a href="{% url 'cours_index' %}">Accéder aux cours</a>
+        </div>
     </div>
+    <div class="line lone">
+        EVENT Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, id sint nam
+        minima,
+        optio cumque eius deleniti neque amet voluptas error maiores soluta quibusdam sapiente doloremque, aliquam
+        consectetur perspiciatis minus
+        .</div>
 </div>
-<div class="line backYel lone">PRESENTATION Lorem ipsum, dolor sit amet consectetur adipisicing elit. Recusandae non
-    aliquid quod minima architecto laudantium quidem sit voluptate aut blanditiis culpa iusto ullam ex, eius officia
-    pariatur, delectus similique consequuntur.</div>
-<div class="line">
-    <div class="lineElem link">
-        <a href="{% url 'forum' %}">Forum</a>
-    </div>
-    <!-- <div class="lineElem link">
-        <a href="{% url 'shop' %}">Shop</a>
-    </div> -->
-</div>
-<div class="line backYel lone">
-    <div class="description">Description des cours Lorem ipsum, dolor sit amet consectetur adipisicing elit. Recusandae non aliquid quod
-        minima architecto laudantium quidem sit voluptate aut blanditiis culpa iusto ullam ex, eius officia pariatur,
-        delectus similique consequuntur.</div>
-    <div class="link">
-        <a href="{% url 'cours_index' %}">Accéder aux cours</a>
-    </div>
-</div>
-<div class="line lone">EVENT Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, id sint nam minima,
-    optio cumque eius deleniti neque amet voluptas error maiores soluta quibusdam sapiente doloremque, aliquam
-    consectetur perspiciatis minus.</div>
 {% endblock %}

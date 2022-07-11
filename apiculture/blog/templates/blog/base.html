@@ -8,6 +8,7 @@
 
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital@1&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -16,13 +17,17 @@
                 <li><a href="{% url 'index' %}">ACCUEIL</a></li>
                 <li><a href="{% url 'cours_index' %}">COURS</a></li>
                 <li><a href="{% url 'forum' %}">FORUM</a></li>
-                <!-- <li><a href="{% url 'shop' %}">SHOP</a></li> -->
             </ul>
-            {% if request.user.is_authenticated %}
-            <ul id="secondMenu">
-                <li><a href="{% url 'user_logout' %}">Se déconnecter</a></li>
-            </ul>
-            {% endif %}
+            <div>
+                <h1>Nom</h1>
+            </div>
+            <div id="secondMenu">
+                {% if request.user.is_authenticated %}
+                <a href="{% url 'user_logout' %}">Se déconnecter</a>
+                {% else %}
+                <a href="{% url 'login' %}">Se connecter</a>
+                {% endif %}
+            </div>
         </nav>
     </header>
     <main>

@@ -6,8 +6,6 @@
 }
 
 html{
-    font-size: 14px;
-    font-family: 'Titillium Web', sans-serif;
     color:#FEFEFE;
 }
 
@@ -16,23 +14,9 @@ a{
     text-decoration: none;
 }
 
-h1{
-    font-size:16px;
-    font-weight: bolder;
-}
-
-
 /* ########################################### */
 /*           Forums.html                       */
 /* ########################################### */
-.container{
-    margin: 20px;
-    padding: 20px;
-}
-
-.subforum{
-    margin-top:20px;
-}
 
 .subforum-title{
     background-color:#292B2E;
@@ -74,10 +58,6 @@ h1{
 
 /* For the smartphones */
 @media screen and (max-width: 460px) {
-    .container{
-        margin: 10px;
-        padding: 10px;
-    }
 
     .subforum-row{
         display: grid;
@@ -98,10 +78,6 @@ h1{
 
 /* For the tablets */
 @media screen and (min-width: 460px) and (max-width: 1024px) {
-    .container{
-        margin: 15px;
-        padding: 15px;
-    }
 
     .subforum-row{
         display: grid;
@@ -461,3 +437,7 @@ h1{
     width: 100%;
 }
 
+#hForum{
+    font-size: 16px;
+    color: #fff;
+}
