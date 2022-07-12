@@ -4,29 +4,62 @@
 
 {% block content %}
 <div class="container">
-    <div class="line lone">
-        PRESENTATION Lorem ipsum, dolor sit amet consectetur adipisicing elit. Recusandae
-        non
-        aliquid quod minima architecto laudantium quidem sit voluptate aut blanditiis culpa iusto ullam ex, eius
-        officia
-        pariatur, delectus similique consequuntur.
+    <div id="lineIndexTop">
+        <p class="whiteL">Bienvenue sur le site de &nbsp;<h1 class="whiteL">l'Association des Apiculteurs de Rouen</h1>.
+        </p>
+    </div>
+    <div class="line lone whiteL">
+        {% if request.user.is_superuser %}
+        <div class="description">
+        {% else %}
+        <div style="width:95%;">
+        {% endif %}
+            {% for introduction in introductions %}
+            {{introduction.description|safe}}
+            {% endfor %}
+        </div>
+        {% if request.user.is_superuser %}
+        <div class="link">
+            <a href="{% url 'cours_index' %}">Changer la présentation</a>
+        </div>
+        {% endif %}
     </div>
     <div class="line lone">
-        <div class="description">
-            Description des cours Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-            Recusandae non aliquid quod
-            minima architecto laudantium quidem sit voluptate aut blanditiis culpa iusto ullam ex, eius officia
-            pariatur,
-            delectus similique consequuntur.</div>
-        <div class="link">
-            <a href="{% url 'cours_index' %}">Accéder aux cours</a>
+        <div class="description whiteL">
+            {% for description in descriptions %}
+            {{description.description|safe}}
+            {% endfor %}
+        </div>
+        <div id="linkContainer">
+            <div class="link insideContainer">
+                <a href="{% url 'cours_index' %}">Accéder aux cours</a>
+            </div>
+            {% if request.user.is_superuser %}
+            <div class="link insideContainer">
+                <a href="{% url 'cours_index' %}">Changer la description</a>
+            </div>
+            {% endif %}
         </div>
     </div>
     <div class="line lone">
-        EVENT Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, id sint nam
-        minima,
-        optio cumque eius deleniti neque amet voluptas error maiores soluta quibusdam sapiente doloremque, aliquam
-        consectetur perspiciatis minus
-        .</div>
+        <div id="eventContainer">
+            <h2 class="whiteL" id="eventTitle">Derniers évenements</h2>
+            {% for event in events %}
+            <div class="subeventContainer">
+                <div class="eventName">
+                    {{event.name}}
+                </div>
+                <div class="event">
+                    {{event.description|safe}}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% if request.user.is_superuser %}
+        <div class="link">
+            <a href="{% url 'cours_index' %}">Admin des évenements</a>
+        </div>
+        {% endif %}
+    </div>
 </div>
 {% endblock %}

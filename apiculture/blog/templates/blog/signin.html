@@ -4,7 +4,7 @@
 
 {% block content %}
 <div>
-    <h1>Connectez vous!</h1>
+    <h1>Inscrivez vous!</h1>
 </div>
 <form class="user" method="post">
     {% csrf_token %}
@@ -16,7 +16,7 @@
         <label for="{{ form.password.id_for_label }}">Mot de passe</label>
         {{ form.password }}
     </div>
-    <button type="submit">Se connecter</button>
+    <button type="submit">S'inscrire</button>
 </form>
 {% if errors %}
     <div>{{ errors }}</div>

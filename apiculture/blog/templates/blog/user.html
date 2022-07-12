@@ -1,0 +1,27 @@
+{% extends 'blog/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<div>
+    <form method="post">
+        {% csrf_token %}
+        <label for="{{ pass_form.old_password.id_for_label }}">Ancien mot de passe:</label>
+        {{ pass_form.old_password }}
+        <label for="{{ pass_form.new_passwor.id_for_label }}">Nouveau mot de passe:</label>
+        {{ pass_form.new_password }}
+        <label for="{{ pass_form.new_password_comf.id_for_label }}">Répétez le nouveau mot de passe:</label>
+        {{ pass_form.new_password_comf }}
+        <button class="coursIndexBTN" type="submit" name="change" value="{{ request.user.id }}">Confirmer</button>
+    </form>
+</div>
+<div>
+    <form method="post">
+        {% csrf_token %}
+        <label for="{{ del_form.password.id_for_label }}">Entrez votre mot de passe:</label>
+        {{ del_form.password }}
+        <button class="coursIndexBTN" type="submit" name="delete" value="{{ request.user.id }}">Confirmer</button>
+    </form>
+    <p>Attention, supprimer son compte est définitif!</p>
+</div>
+{% endblock %}

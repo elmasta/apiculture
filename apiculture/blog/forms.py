@@ -11,6 +11,7 @@ class UserLoginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput(attrs={
         "class": "form-control"}))
 
+
 class CreationCoursForm(forms.ModelForm):
 
     class Meta:
@@ -21,3 +22,19 @@ class CreationCoursForm(forms.ModelForm):
             "teatching": SummernoteWidget(attrs={"class": "form-control"}),
             "description": forms.TextInput(attrs={"class": "form-control"}),
         }
+
+
+class PasswordChange(forms.Form):
+
+    old_password = forms.CharField(widget=forms.PasswordInput(attrs={
+        "class": "form-control"}))
+    new_password = forms.CharField(widget=forms.PasswordInput(attrs={
+        "class": "form-control"}))
+    new_password_comf = forms.CharField(widget=forms.PasswordInput(attrs={
+        "class": "form-control"}))
+
+
+class UserDelete(forms.Form):
+
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
+        "class": "form-control"}))

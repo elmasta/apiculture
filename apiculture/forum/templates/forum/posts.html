@@ -22,21 +22,19 @@
         {% for post in posts %}
         <div class="table-row">
 
-            {% if post.closed == True %}
             <div class="status">
+                {% if post.closed %}
                 <i class="fa fa-lock"></i>
-                {% if post.closed == True %}
+                {% if member.is_moderator %}
                 <button>Ouvrir le sujet</button>
                 {% endif %}
-            </div>
-            {% else %}
-            <div class="status">
+                {% else %}
                 <i class="fa fa-unlock-alt"></i>
-                {% if post.closed == False %}
+                {% if member.is_moderator %}
                 <button>Clore le sujet</button>
                 {% endif %}
+                {% endif %}
             </div>
-            {% endif %}
 
             <div class="subjects">
                 <a href="{{post.get_url}}">{{post.title}}</a>

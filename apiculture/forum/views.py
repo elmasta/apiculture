@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render, get_object_or_404, get_list_or_404
-from forum.models import Category, Post, Reply, Banned_IP
+from forum.models import Category, Post, Reply, Banned_IP, Member
 from forum.utils import update_views
 from forum.forms import PostForm, ReplyForm
 from blog.views import index
@@ -29,7 +29,7 @@ def forum(request):
             "num_posts": num_posts,
             "num_users": num_users,
             "num_categories": num_categories,
-         "last_post": last_post,
+            "last_post": last_post,
             "title": "OZONE forum app"
         }
         return render(request, "forum/forums.html", context)
@@ -60,6 +60,10 @@ def detail(request, slug):
 
 def posts(request, slug):
 
+    if request.user.is_authenticated:
+        member = Member.objects.get(user=request.user.id)
+    else:
+        member = {"is_moderator": False}
     category = get_object_or_404(Category, slug=slug)
     posts = get_list_or_404(Post.objects.filter(approved=True, categories=category).order_by('date'))
     for i in posts:
@@ -70,9 +74,9 @@ def posts(request, slug):
     context = {
         "posts": posts,
         "forum": category,
-        "title": "OZONE: Posts"
+        "member": member,
+        "title": "OZONE: Posts",
     }
-
     return render(request, "forum/posts.html", context)
 
 

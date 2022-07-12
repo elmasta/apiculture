@@ -15,16 +15,16 @@ a{
 }
 
 header, footer{
-    background-color: rgb(233, 252, 220);
+    background-color: #FFFAF0;
 }
 
 header{
-    box-shadow:0px 2px 3px rgb(233, 252, 220);
+    box-shadow:0px 2px 3px #FFFAF0;
 }
 
 nav{
     width: 100%;
-    padding: 1.5rem 0;
+    /* padding: 1.5rem 0; */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -40,13 +40,14 @@ ul{
 }
 
 h1{
-    font-size:22px;
+    font-size:40px;
     font-weight: bolder;
-    color: black;
 }
 
 #secondMenu{
     width: 15%;
+    display: flex;
+    justify-content: space-around;
 }
 
 footer{
@@ -56,7 +57,7 @@ footer{
     display: flex;
     justify-content: center;
     padding: 1rem 0;
-    box-shadow:0px -2px 3px rgb(233, 252, 220);
+    box-shadow:0px -2px 3px #FFFAF0;
 }
 
 html{
@@ -75,6 +76,7 @@ html{
     justify-content: space-around;
     width: 100%;
     padding: 3rem 0;
+    margin: 1rem 0;
 }
 
 .lineElem{
@@ -87,13 +89,35 @@ html{
 }
 
 .link{
-    background-color: green;
+    width: 10%;
+    height: 20px;
+    background-color:rgba(255, 255, 255, 0.603);
+    display: flex;
+    justify-content: center;
+    margin-left: 2px;
+    margin-bottom: 20px;
+    padding: 0.5rem 0;
+    border-radius: 5px;
+}
+
+#linkContainer{
     width: 10%;
 }
 
+.insideContainer{
+    width: 100%;
+}
+
 .lone{
+    background-color: #292b2ea8;
+    border-radius: 5px;
+}
+
+#title{
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    background-color: #292b2ea8;
+    border-radius: 5px;
 }
 
 #cours_list_block{
@@ -149,6 +173,65 @@ html{
 
 h2{
     color: white;
+}
+
+#imgName{
+    display: flex;
+}
+
+#logo{
+    width: 100px;
+}
+
+#logoIndex{
+    width: 150px;
+    border-radius: 100%;
+}
+
+#lineIndexTop{
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0;
+    justify-content: center;
+    background-color: #292b2ea8;
+    border-radius: 5px;
+}
+
+.whiteL,
+.coursContainer>h1,
+.coursContainer>div>p,
+.coursContainer>div>p>span{
+    color: white;
+}
+
+#eventContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+}
+
+.event{
+    width: 80%;
+}
+
+#eventTitle{
+    margin-bottom: 1rem;
+}
+
+.subeventContainer{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    background-color: #FFFAF0;
+    border-radius: 5px;
+    margin: 1rem 0;
+    padding: 0.5rem 0;
+}
+
+.eventName{
+    width: 10%;
+    text-align: center;
 }
 
 @media screen and (max-width: 460px) {

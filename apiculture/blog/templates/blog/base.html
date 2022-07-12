@@ -18,14 +18,17 @@
                 <li><a href="{% url 'cours_index' %}">COURS</a></li>
                 <li><a href="{% url 'forum' %}">FORUM</a></li>
             </ul>
-            <div>
-                <h1>Nom</h1>
+            <div id="imgName">
+                <img src="{% static 'img/aarlog.png' %}" id="logo">
+                <img src="{% static 'img/aarname.png' %}">
             </div>
             <div id="secondMenu">
                 {% if request.user.is_authenticated %}
                 <a href="{% url 'user_logout' %}">Se déconnecter</a>
+                <a href="{% url 'user_option' %}">Gérer son compte</a>
                 {% else %}
                 <a href="{% url 'login' %}">Se connecter</a>
+                <a href="{% url 'user_signin' %}">S'inscrire</a>
                 {% endif %}
             </div>
         </nav>

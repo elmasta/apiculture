@@ -25,10 +25,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-db+pf8pa(j!@as1luww)jn3tc!-&vk8qc_ejy!)2z+bt23wi8w'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if os.getenv("ENV") == "True":
+    DEBUG = True
+else:
+    DEBUG = False
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -80,19 +82,25 @@ WSGI_APPLICATION = 'apiculture.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-        # 'ENGINE': 'django.db.backends.postgresql',
-        # 'NAME': 'apiculture',
-        # 'USER': str(os.getenv("DBUSER")),
-        # 'PASSWORD': str(os.getenv("DBPASS")),
-        # 'HOST': '',
-        # 'PORT': '5432',
-        # 'ATOMIC_REQUESTS': True,
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'apiculture',
+            'USER': str(os.getenv("DBUSER")),
+            'PASSWORD': str(os.getenv("DBPASS")),
+            'HOST': '',
+            'PORT': '5432',
+            'ATOMIC_REQUESTS': True,
+        }
+    }
 
 
 # Password validation

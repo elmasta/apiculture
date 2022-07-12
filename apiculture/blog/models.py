@@ -26,3 +26,11 @@ class Event(models.Model):
     published = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+class Introduction(models.Model):
+
+    description = models.TextField(null=False)
+
+class Description(models.Model):
+
+    description = models.TextField(null=False)

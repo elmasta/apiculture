@@ -3,8 +3,8 @@
 {% load static %}
 
 {% block content %}
-<div id="{{ cours.id }}">
-    <div>{{ cours.name }}</div>
+<div id="{{ cours.id }}" class="coursContainer">
+    <h1>{{ cours.name }}</h1>
     <div>{{ cours.teatching|safe }}</div>
 </div>
 {% endblock %}

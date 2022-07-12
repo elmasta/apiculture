@@ -11,6 +11,13 @@ class EventAdmin(SummernoteModelAdmin):
     summernote_fields = ('description')
     list_display = ("name", "description")
 
+class IntroductionAdmin(SummernoteModelAdmin):
+    summernote_fields = ('description')
+
+class DescriptionAdmin(SummernoteModelAdmin):
+    summernote_fields = ('description')
 
 admin.site.register(Cours, CoursAdmin)
 admin.site.register(Event, EventAdmin)
+admin.site.register(Introduction, IntroductionAdmin)
+admin.site.register(Description, DescriptionAdmin)
