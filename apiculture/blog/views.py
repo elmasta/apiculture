@@ -77,7 +77,7 @@ def user_signin(request):
                     is_banned = False
                     )
                     new_member.save()
-                    return redirect("login_page")
+                    return redirect("login")
         form = UserLoginForm()
         context["form"] = form
         return render(request, "blog/signin.html", context)
@@ -180,4 +180,8 @@ def cours_creation(request):
         form = CreationCoursForm()
         context["form"] = form
         return render(request, 'blog/coursedit.html', context)
+    return redirect("index")
+
+def legal(request):
+
     return redirect("index")

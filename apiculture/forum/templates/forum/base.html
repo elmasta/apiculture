@@ -9,7 +9,7 @@
 <form action="{% url 'search_result' %}" role="form" method="GET">
     <div class="search-box">
         <div>
-            <select name="search-box" id="">
+            <select name="search-box">
                 <option value="Everything">Tout rechercher</option>
                 <option value="Titles">Titre</option>
                 <option value="Descriptions">Descriptions</option>
@@ -17,6 +17,11 @@
             <input type="text" name="q" placeholder="Recherche">
             <button type="submit" name="search"><i class="fa fa-search"></i></button>
         </div>
+        {% if member.is_moderator %}
+        <div id="adminForum">
+            <a href="{% url 'admin' %}">Administration forum</a>
+        </div>
+        {% endif %}
     </div>
 </form>
 {% if messages %}

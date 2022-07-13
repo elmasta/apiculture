@@ -12,29 +12,35 @@
     <!--Topic Section-->
     <div class="topic-container">
         <!--Original thread-->
-        <div class="head">
+        <div class="head roundedEdges">
             <div class="authors">Auteur</div>
-            <div class="content">Sujet: {{post.title}} (Read {% get_hit_count for post %} Times)</div>
+            <div class="content">Sujet: {{post.title}} (lu {% get_hit_count for post %} fois)</div>
         </div>
 
-        <div class="body">
+        <div class="body roundedEdges">
             <div class="authors">
+                {% if post.user %}
                 <div class="username forumLink">{{post.user.user.username|title}}</div>
+                {% else %}
+                <div>Utilisateur Suprimé</div>
+                {% endif %}
                 {% if post.user.is_moderator %}
                 <div>Role: Modérateur</div>
                 {% elif post.user.is_banned %}
                 <div>Utilisateur banni</div>
+                {% elif post.user is None %}
+                <div>Utilisateur Suprimé</div>
                 {% else %}
                 <div>Role: Utilisateur</div>
                 {% endif %}
             </div>
             <div class="content">
-                <p style="color:aqua">Ceci est le premier post du topic</p>
+                <p style="color:rgb(253, 123, 123)">Ceci est le premier message du sujet</p>
                 {{post.content|safe}}
             </div>
         </div>
         {% for reply in replies %}
-        <div class="body">
+        <div class="body roundedEdges">
             <div class="authors">
                 {% if reply.user.is_moderator %}
                 <div class="username forumLink">{{reply.user.user.username|title}}</div>
@@ -42,6 +48,9 @@
                 {% elif reply.user.is_banned %}
                 <div class="username forumLink" style="color:gray">{{reply.user.user.username|title}}</div>
                 <div>Utilisateur banni</div>
+                {% elif reply.user.user is None %}
+                <div class="username forumLink" style="color:gray">Utilisateur suprimé</div>
+                <div>Utilisateur suprimé</div>
                 {% else %}
                 <div class="username forumLink">{{reply.user.user.username|title}}</div>
                 <div>Role: Utilisateur</div>
@@ -52,7 +61,7 @@
             </div>
         </div>
         {% endfor %}
-        <div class="body">
+        <div class="body roundedEdges">
             <form class="summernote" method="post">
                 {% csrf_token %}
                 <div class="summernote">
@@ -66,8 +75,10 @@
 
     <!--Pagination starts-->
     <div class="pagination">
+        {% if replies.has_next or replies.has_previous %}
         pages: {% for num_page in replies.paginator.page_range %} <a href="?page={{num_page}}">{{num_page}}</a>
         {% endfor %}
+        {% endif %}
     </div>
     <!--pagination ends-->
 </div>

@@ -34,7 +34,7 @@ a{
     padding: 10px;
     margin:4px;
     border-radius: 5px;
-    background-color: rgba(250, 250, 144, .3);
+    background-color: #292b2ea8;
 }
 
 .subforum-description *{
@@ -195,6 +195,7 @@ a{
     padding: 40px;
     display:flex;
     justify-content: center;
+    align-items: center;
 }
 
 .search-box select{
@@ -229,7 +230,7 @@ a{
 /* forum info Styling */
 .forum-info{
     padding: 20px;
-    background-color: rgba(250, 250, 144, .3);
+    background-color: #292b2ea8;
     position: fixed;
     bottom: 70px;
     width: 100%;
@@ -281,7 +282,7 @@ a{
 .table-row .status, .table-row .subjects, .table-row .replies, .table-row .last-reply{
     padding: 5px;
     margin: 2px;
-    background-color: #131415;
+    background-color: #292b2ea8;
 }
 
 .table-row .status{
@@ -371,7 +372,7 @@ a{
 
 .body{
     display: flex;
-    background-color: #131415;
+    background-color: #292b2ea8;
     padding: 10px;
     margin-top: 5px;
 }
@@ -440,4 +441,32 @@ a{
 #hForum{
     font-size: 16px;
     color: #fff;
+}
+
+.whiteLinks{
+    color: #fff;
+}
+
+.cyanLinks{
+    color: aqua;
+}
+
+.roundedEdges{
+    border-radius: 5px;
+}
+
+#noTopic{
+    display: flex;
+    justify-content: center;
+    background-color: #292b2ea8;
+}
+
+#adminForum{
+    background-color:rgba(255, 255, 255, 0.603);
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    margin-left: 2px;
+    padding: 0.5rem 0;
+    border-radius: 5px;
 }

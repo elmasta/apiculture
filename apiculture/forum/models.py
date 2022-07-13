@@ -7,7 +7,7 @@ from django.shortcuts import reverse
 
 
 class Member(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     ip = models.CharField(max_length=30)
     is_moderator = models.BooleanField(default=False)
     is_banned = models.BooleanField(default=False)
@@ -17,7 +17,10 @@ class Member(models.Model):
         return Post.objects.filter(user=self).count()
 
     def __str__(self):
-        return self.user.username
+        try:
+            return self.user.username
+        except AttributeError:
+            return "User Deleted"
 
 class Banned_IP(models.Model):
     ip = models.CharField(max_length=30)
@@ -47,7 +50,7 @@ class Category(models.Model):
 
     @property
     def num_posts(self):
-        return Post.objects.filter(categories=self).count()
+        return Post.objects.filter(categories=self, approved=True).count()
     
     @property
     def last_post(self):
@@ -58,11 +61,11 @@ class Category(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=400)
     slug = models.SlugField(max_length=400, unique=True, blank=True)
-    user = models.ForeignKey(Member, on_delete=models.CASCADE)
+    user = models.ForeignKey(Member, on_delete=models.SET_NULL, null=True)
     content = models.TextField()
     categories = models.ForeignKey(Category, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
-    approved = models.BooleanField(default=False)
+    approved = models.BooleanField(default=True)
     hit_count_generic = GenericRelation(HitCount, object_id_field='object_pk',
         related_query_name='hit_count_generic_relation'
     )
@@ -80,12 +83,16 @@ class Post(models.Model):
         return reverse("detail", kwargs={
             "slug":self.slug
         })
+    
+    @property
+    def last_reply(self):
+        return Reply.objects.filter(post=self).latest("date")
 
 
 # réponse à un topic
 class Reply(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    user = models.ForeignKey(Member, on_delete=models.CASCADE)
+    user = models.ForeignKey(Member, on_delete=models.SET_NULL, null=True)
     content = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
 
