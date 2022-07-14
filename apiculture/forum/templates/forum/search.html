@@ -4,48 +4,91 @@
 <div class="container">
     <!--Navigation-->
     <div class="navigate">
-        <span>Search: {{query}} --> {{objects|length}} Result(s) Found</span>
+        <span>Recherche: {{query}} --> {{objects|length}} Resultat(s)</span>
     </div>
     <!--Display posts table-->
+    {% if objects %}
     <div class="posts-table">
         <div class="table-head">
-            <div class="status">Status</div>
-            <div class="subjects">Subjects</div>
-            <div class="replies">Replies/Views</div>
-            <div class="last-reply">Last Reply</div>
+            <div class="status roundedEdges">Status</div>
+            <div class="subjects roundedEdges">Sujets</div>
+            <div class="replies roundedEdges">Réponses/Vue(s)</div>
+            <div class="last-reply roundedEdges">Dernière réponse</div>
         </div>
 
         {% for post in objects %}
         <div class="table-row">
-            <div class="status"><i class="fa fa-fire"></i></div>
-            <div class="subjects">
-                <a href="{{post.get_url}}">{{post.title}}</a>
+
+            <div class="status roundedEdges">
+                {% if post.closed %}
+                <i class="fa fa-lock"></i>
+                {% if member.is_moderator %}
+                <button>Ouvrir le sujet</button>
+                {% endif %}
+                {% else %}
+                <i class="fa fa-unlock-alt"></i>
+                {% if member.is_moderator %}
+                <button>Clore le sujet</button>
+                {% endif %}
+                {% endif %}
+            </div>
+
+            <div class="subjects roundedEdges">
+                <a class="cyanLinks" href="{{post.get_url}}">{{post.title}}</a>
                 <br>
-                <span>Started by <b><a href="">{{post.user.fullname|title}}</a></b> .</span>
+                <span>Débuté par <b>
+                    {% if post.user.user is None %}
+                    Utilisateur suprimé
+                    {% else %}
+                    {{post.user.user.username|title}}
+                    {% endif %}
+                </b> .</span>
             </div>
             <div class="replies">
-                {{post.num_comments}} comments <br> {% get_hit_count for post %} views
+                {{post.num_comments}} réponses <br> Vue {% get_hit_count for post %} fois.
             </div>
 
             {% if post.last_reply %}
-            <div class="last-reply">
-                {{post.last_reply.date|date}}
-                <br>By <b><a href="">{{post.last_reply.user.fullname|title}}</a></b>
+            <div class="last-reply roundedEdges">
+                le {{post.last_reply.date|date}}
+                <br>Par <b>
+                    {% if post.last_reply.user.user is None %}
+                    Utilisateur suprimé
+                    {% else %}
+                    {{post.last_reply.user.user.username|title}}
+                    {% endif %}
+                </b>
             </div>
             {% else %}
-            <div class="last-reply">
-                {{post.date|date}}
-                <br>By <b><a href="">{{post.user.fullname|title}}</a></b>
+            <div class="last-reply roundedEdges">
+                le {{post.date|date}}
+                <br>Par <b>
+                    {% if post.user.user is None %}
+                    Utilisateur suprimé
+                    {% else %}
+                    {{post.user.user.username|title}}
+                    {% endif %}
+                </b>
             </div>
             {% endif %}
         </div>
         {% endfor %}
+        {% else %}
+        <div class="subforum-title roundedEdges" id="noTopic">
+            <h1><i class="fa fa-frown-o"></i>&nbsp;Aucun résultat.</h1>
+        </div>
+        {% endif %}
 
     </div>
     <!--Pagination starts-->
     <div class="pagination">
-        pages: {% for num_page in posts.paginator.page_range %} <a href="?page={{num_page}}">{{num_page}}</a>
+        {% if objects %}
+        {% if objects.has_next or objects.has_previous %}
+        pages: {% for num_page in objects.paginator.page_range %}
+         <a href="?page={{num_page}}">{{num_page}}</a>
         {% endfor %}
+        {% endif %}
+        {% endif %}
     </div>
     <!--pagination ends-->
 </div>

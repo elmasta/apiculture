@@ -1,13 +1,29 @@
 {% extends 'forum/base.html' %}
 {% load crispy_forms_tags %}
 {% block forum %}
-
-<h1 style="text-align:center; margin-block:50px; color:red;">Nouveau sujet</h1>
-
-<form method="POST" style="margin-left:150px;">
-    {% csrf_token %}
-    {{form|crispy}}
-    <input type="submit" value="Save" style="margin-block:50px;">
-</form>
-
+<div class="container">
+    <div id="lineIndexTop">
+        <h1 style="text-align:center;">Nouveau sujet</h1>
+    </div>
+    <div class="line lone">
+        <form method="POST" style="width:80%;">
+            {% csrf_token %}
+            <div>
+                <label for="{{ form.title.id_for_label }}">Titre du sujet:</label>
+                {{ form.title }}
+            </div>
+            <div>
+                <label for="{{ form.content.id_for_label }}">Contenu du sujet</label>
+                {{ form.content }}
+            </div>
+            <div>
+                <label for="{{ form.categories.id_for_label }}">Catégorie</label>
+                {{ form.categories }}
+            </div>
+            <div>
+                <input type="submit" value="Envoyer">
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock forum %}

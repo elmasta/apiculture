@@ -1,0 +1,36 @@
+{% extends 'forum/base.html' %}
+
+{% load hitcount_tags %}
+
+{% block forum %}
+<div class="container">
+    <div class="line lone whiteL" id="addCatCon">
+        <h3 id="addCatTitle">Liste des utilisateurs</h3>
+        {% for member in members %}
+        <div class="body roundedEdges adminForumElem">
+            <h4>{{member.user.username}}</h4>
+            <form class="adminForumForm" method="post">
+                {% csrf_token %}
+                <div>
+                    <label for="moderator">Est modérateur</label>
+                    {% if member.is_moderator %}
+                    <input type="checkbox" id="moderator" name="moderator" checked>
+                    {% else %}
+                    <input type="checkbox" id="moderator" name="moderator">
+                    {% endif %}
+                </div>
+                <div>
+                    <label for="banned">Est banni</label>
+                    {% if member.is_banned %}
+                    <input type="checkbox" id="banned" name="banned" checked>
+                    {% else %}
+                    <input type="checkbox" id="banned" name="banned">
+                    {% endif %}
+                </div>
+                <button type="submit" name="change" class="catButton" value="{{ member.user.id }}">Valider</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock forum %}

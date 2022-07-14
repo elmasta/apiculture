@@ -55,6 +55,12 @@
                 <div class="username forumLink">{{reply.user.user.username|title}}</div>
                 <div>Role: Utilisateur</div>
                 {% endif %}
+                {% if member.is_moderator %}
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" name="delete" value="{{ reply.id }}">Supprimer le message</button>
+                </form>
+                {% endif %}
             </div>
             <div class="content">
                 {{reply.content|safe}}

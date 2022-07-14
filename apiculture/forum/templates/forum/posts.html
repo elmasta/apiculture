@@ -6,15 +6,17 @@
     <div class="navigate">
         <span><a href="{% url 'forum' %}">Forum</a> >> <a href="{{default_page}}">{{forum.title}}</a></span>
     </div>
+    {% if request.user.is_authenticated %}
     <div id="createSubject">
-        <a href="">Créer un sujet</a>
+        <a href="{% url 'create_post' %}">Créer un sujet</a>
     </div>
+    {% endif %}
     {% if posts %}
     <!--Display posts table-->
     <div class="posts-table">
         <div class="table-head">
             <div class="status roundedEdges">Status</div>
-            <div class="subjects roundedEdges">Sujet</div>
+            <div class="subjects roundedEdges">Sujets</div>
             <div class="replies roundedEdges">Réponses/Vue(s)</div>
             <div class="last-reply roundedEdges">Dernière réponse</div>
         </div>
@@ -26,13 +28,25 @@
                 {% if post.closed %}
                 <i class="fa fa-lock"></i>
                 {% if member.is_moderator %}
-                <button>Ouvrir le sujet</button>
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" name="open" value="{{ post.id }}">Ouvrir le sujet</button>
+                </form>
                 {% endif %}
                 {% else %}
                 <i class="fa fa-unlock-alt"></i>
                 {% if member.is_moderator %}
-                <button>Clore le sujet</button>
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" name="close" value="{{ post.id }}">Clore le sujet</button>
+                </form>
                 {% endif %}
+                {% endif %}
+                {% if member.is_moderator %}
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" name="delete" value="{{ post.id }}">Supprimer le sujet</button>
+                </form>
                 {% endif %}
             </div>
 

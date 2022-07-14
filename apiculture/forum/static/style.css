@@ -37,8 +37,9 @@ a{
     background-color: #292b2ea8;
 }
 
-.subforum-description *{
-    margin-block: 0;
+.subforum-description{
+    display: flex;
+    justify-content: space-between;
 }
 
 .center{
@@ -231,8 +232,9 @@ a{
 .forum-info{
     padding: 20px;
     background-color: #292b2ea8;
-    position: fixed;
-    bottom: 70px;
+    position: relative;
+    margin-bottom: 60px;
+    bottom: 0px;
     width: 100%;
 }
 
@@ -469,4 +471,63 @@ a{
     margin-left: 2px;
     padding: 0.5rem 0;
     border-radius: 5px;
+}
+
+.catForm{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.catButton{
+    padding: 0.7rem 0.2rem;
+    margin: 0.7rem 0;
+}
+
+#titleDesc{
+    width: 60%;
+}
+
+#description{
+    width: 60%;
+}
+
+.formCatCon{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 0.7rem 0;
+}
+
+.catLabel{
+    margin-right: 0.5rem;
+}
+
+#addCatTitle{
+    font-size: 2rem;
+}
+
+#addCatCon{
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 3rem;
+}
+
+h4{
+    font-size: 1.5rem;
+}
+
+.adminForumElem{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 40%;
+}
+
+.adminForumForm{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 60%;
 }
