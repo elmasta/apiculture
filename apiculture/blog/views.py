@@ -4,6 +4,7 @@ from django.shortcuts import render, get_list_or_404, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.contrib.auth.decorators import login_required
 from blog.models import *
 from blog.forms import *
 from forum.models import Member, Banned_IP
@@ -121,8 +122,24 @@ def user_option(request):
         return redirect("index")
 
 
+@login_required
 def event_admin(request):
 
+    if request.user.is_superuser:
+        if request.method == "POST":
+            if request.POST.get("delete"):
+                Event.objects.get(id=request.POST.get("delete")).delete()
+            elif request.POST.get("published"):
+                modif_event = Event.objects.get(id=request.POST.get("published"))
+                modif_event.published = True
+                modif_event.save()
+            elif request.POST.get("unpublished"):
+                modif_event = Event.objects.get(id=request.POST.get("unpublished"))
+                modif_event.published = False
+                modif_event.save()
+        events = Event.objects.all()
+        context = {"events" : events}
+        return render(request, 'blog/event_admin.html', context)
     return redirect("index")
 
 
@@ -135,8 +152,8 @@ def cours(request, cours_id):
 
 def cours_index(request):
     
-    context = {}
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and request.user.is_superuser:
+        cours = Cours.objects.all().order_by("created_at")
         if request.method == "POST":
             if request.POST.get("delete"):
                 Cours.objects.get(id=request.POST.get("delete")).delete()
@@ -144,12 +161,14 @@ def cours_index(request):
                 modif_cours = Cours.objects.get(id=request.POST.get("published"))
                 modif_cours.published = True
                 modif_cours.save()
-    if request.user.is_superuser:
-        cours = Cours.objects.all().order_by("created_at")
+            elif request.POST.get("unpublished"):
+                modif_cours = Cours.objects.get(id=request.POST.get("unpublished"))
+                modif_cours.published = False
+                modif_cours.save()
     else:
         cours = Cours.objects.exclude(published=False).order_by("created_at")
     if cours:
-        paginator = Paginator(cours, 1)
+        paginator = Paginator(cours, 10)
         page = request.GET.get('page')
         try:
             cours = paginator.page(page)
@@ -157,16 +176,15 @@ def cours_index(request):
             cours = paginator.page(1)
         except EmptyPage:
             cours = paginator.page(paginator.num_pages)
-        context["list"] = cours
+        context = {"list": cours}
         return render(request, 'blog/cours_index.html', context)
-    else:
-        return redirect("index")
+    return redirect("index")
 
 
+@login_required
 def cours_creation(request):
     
-    context = {}
-    if request.user.is_authenticated:
+    if request.user.is_superuser:
         if request.method == "POST":
             form = CreationCoursForm(request.POST)
             if form.is_valid():
@@ -178,7 +196,7 @@ def cours_creation(request):
                 new_cours.save()
                 return redirect("cours_index")
         form = CreationCoursForm()
-        context["form"] = form
+        context = {"form": form}
         return render(request, 'blog/coursedit.html', context)
     return redirect("index")
 

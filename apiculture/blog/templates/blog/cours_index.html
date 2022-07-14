@@ -3,16 +3,19 @@
 {% load static %}
 
 {% block content %}
-{% if request.user.is_authenticated %}
-<div>
-    <a href="{% url 'cours_creation' %}">Créer un cours</a>
-</div>
-{% endif %}
 <div id="cours_list_block">
+    <div class="cours_list">
+        <h2>Liste des évènements</h2>
+        {% if request.user.is_superuser %}
+        <div>
+            <a href="{% url 'cours_creation' %}">Créer un cours</a>
+        </div>
+        {% endif %}
+    </div>
     {% for cours in list %}
     <div id="{{ cours.id }}" class="cours_list">
         <h2>
-            {{ cours.name }}
+            {{ cours.name }}{% if cours.published == False %} (non publié!){% endif %}
         </h2>
         <div class="desc_and_del">
             <div class="desc">
@@ -44,13 +47,13 @@
     {% endfor %}
 </div>
 {% if list.has_previous %}
-    <div class="pagination">
-        <a href="{% url 'cours_index'%}?page={{ list.previous_page_number }}">page précédente</a>
-    </div>
+<div class="pagination">
+    <a href="{% url 'cours_index'%}?page={{ list.previous_page_number }}">page précédente</a>
+</div>
 {% endif %}
 {% if list.has_next %}
-    <div class="pagination">
-        <a href="{% url 'cours_index'%}?page={{ list.next_page_number }}">page suivante</a>
-    </div>
+<div class="pagination">
+    <a href="{% url 'cours_index'%}?page={{ list.next_page_number }}">page suivante</a>
+</div>
 {% endif %}
 {% endblock %}
