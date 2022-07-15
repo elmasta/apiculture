@@ -3,22 +3,28 @@
 {% load static %}
 
 {% block content %}
-<form class="user" method="post">
-    {% csrf_token %}
-    <div>
-        <label for="{{ form.name.id_for_label }}">Nom du cours</label>
-        {{ form.name }}
+<div class="container" id="userAdmnCont">
+    <div class="cours_list whiteL">
+        <h1 class="interline">Création de cours</h1>
+        <form class="user" method="post" style="width:90%">
+            {% csrf_token %}
+            <div class="interline">
+                <label for="{{ form.name.id_for_label }}">Nom du cours:</label>
+                {{ form.name }}
+            </div>
+            <div class="interline">
+                <label for="{{ form.teatching.id_for_label }}">Contenu du cours:</label>
+                {{ form.teatching }}
+            </div>
+            <div class="interline">
+                <label for="{{ form.description.id_for_label }}">Description du cours:</label>
+                {{ form.description }}
+            </div>
+            <div class="interline">
+                <button class="coursIndexBTN" type="submit" name="register" value="register">Enregistrer</button>
+                <button class="coursIndexBTN" type="submit" name="publish" value="publish">Publier</button>
+            </div>
+        </form>
     </div>
-    <div>
-        <label for="{{ form.teatching.id_for_label }}">Contenu du cours</label>
-        {{ form.teatching }}
-    </div>
-    <div>
-        <label for="{{ form.description.id_for_label }}">Description du cours</label>
-        {{ form.description }}
-    </div>
-    <button type="submit" id="preview">Prévisualiser</button>
-    <button type="submit" id="register">Enregistrer</button>
-    <button type="submit" id="publish">Publier</button>
-</form>
+</div>
 {% endblock %}

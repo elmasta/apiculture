@@ -1,9 +1,6 @@
-import os
 import forum.func as func
-from django.shortcuts import render, get_list_or_404, redirect
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponse
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.auth.decorators import login_required
 from blog.models import *
 from blog.forms import *
@@ -145,8 +142,21 @@ def event_admin(request):
 
 def cours(request, cours_id):
 
+    context = {}
     current_cours = Cours.objects.get(id=cours_id)
-    context = {"cours" : current_cours}
+    if request.user.is_superuser:
+        if request.method == "POST":
+            form = CreationCoursForm(request.POST)
+            if form.is_valid():
+                current_cours.name = form.cleaned_data["name"]
+                current_cours.teatching = form.cleaned_data["teatching"]
+                current_cours.description = form.cleaned_data["description"]
+                if request.POST.get("publish"):
+                    current_cours.published = True
+                current_cours.save()
+        form = CreationCoursForm(instance=current_cours)
+        context["form"] = form
+    context["cours"] = current_cours
     return render(request, 'blog/cours.html', context)
 
 
@@ -167,18 +177,8 @@ def cours_index(request):
                 modif_cours.save()
     else:
         cours = Cours.objects.exclude(published=False).order_by("created_at")
-    if cours:
-        paginator = Paginator(cours, 10)
-        page = request.GET.get('page')
-        try:
-            cours = paginator.page(page)
-        except PageNotAnInteger:
-            cours = paginator.page(1)
-        except EmptyPage:
-            cours = paginator.page(paginator.num_pages)
-        context = {"list": cours}
-        return render(request, 'blog/cours_index.html', context)
-    return redirect("index")
+    context = {"list": cours}
+    return render(request, 'blog/cours_index.html', context)
 
 
 @login_required
@@ -187,19 +187,102 @@ def cours_creation(request):
     if request.user.is_superuser:
         if request.method == "POST":
             form = CreationCoursForm(request.POST)
-            if form.is_valid():
+            if form.is_valid() and request.POST.get("register"):
                 new_cours = Cours(
                     name = form.cleaned_data["name"],
                     teatching = form.cleaned_data["teatching"],
                     description = form.cleaned_data["description"]
                 )
                 new_cours.save()
-                return redirect("cours_index")
+            elif form.is_valid() and request.POST.get("publish"):
+                new_cours = Cours(
+                    name = form.cleaned_data["name"],
+                    teatching = form.cleaned_data["teatching"],
+                    description = form.cleaned_data["description"],
+                    published = True
+                )
+            return redirect("cours_index")
         form = CreationCoursForm()
         context = {"form": form}
         return render(request, 'blog/coursedit.html', context)
     return redirect("index")
 
+
+@login_required
+def event_creation(request):
+
+    if request.user.is_superuser:
+        if request.method == "POST":
+            form = EventForm(request.POST)
+            if form.is_valid():
+                if request.POST.get("publish"):
+                    new_event = Event(
+                        name = form.cleaned_data["name"],
+                        description = form.cleaned_data["description"],
+                        published = True
+                    )
+                else:
+                    new_event = Event(
+                        name = form.cleaned_data["name"],
+                        description = form.cleaned_data["description"]
+                    )
+                new_event.save()
+            return redirect("event_admin")
+        form = EventForm()
+        context = {"form": form}
+        return render(request, 'blog/event_creation.html', context)
+    return redirect("index")
+
+
+@login_required
+def event_modif(request, event_id):
+
+    if request.user.is_superuser:
+        current_event = Event.objects.get(id=event_id)
+        if request.method == "POST":
+            form = EventForm(request.POST)
+            if form.is_valid():
+                current_event.name = form.cleaned_data["name"]
+                current_event.description = form.cleaned_data["description"]
+                if request.POST.get("publish"):
+                    current_event.published = True
+                current_event.save()
+                return redirect("event_admin")
+        form = EventForm(instance=current_event)
+        context = {"form": form}
+        return render(request, 'blog/event_creation.html', context)
+    return redirect("index")
+
+
+@login_required
+def index_modif(request):
+
+    if request.user.is_superuser:
+        introduction = Introduction.objects.all()
+        introduction = introduction[0]
+        description = Description.objects.all()
+        description = description[0]
+        if request.method == "POST":
+            form_intro = IntroductionForm(request.POST)
+            form_desc = DescriptionForm(request.POST)
+            if form_intro.is_valid():
+                introduction.description = form_intro.cleaned_data["description"]
+                introduction.save()
+            elif form_desc.is_valid():
+                description.description = form_desc.cleaned_data["description"]
+                description.save()
+            return redirect("index")
+        form_intro = IntroductionForm(instance=introduction)
+        form_desc = DescriptionForm(instance=description)
+        context = {
+            "form_intro": form_intro,
+            "form_desc": form_desc,
+        }
+        return render(request, 'blog/index_modif.html', context)
+    return redirect("index")
+
+
 def legal(request):
 
-    return redirect("index")
+    
+    return render(request, 'blog/legal.html')

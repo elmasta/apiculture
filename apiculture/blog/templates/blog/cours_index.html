@@ -5,15 +5,21 @@
 {% block content %}
 <div id="cours_list_block">
     <div class="cours_list">
-        <h2>Liste des évènements</h2>
+        {% if list %}
+        <h2>Liste des cours:</h2>
+        {% else %}
+        <h2>Aucun cours pour le moment</h2>
+        {% endif %}
         {% if request.user.is_superuser %}
-        <div>
-            <a href="{% url 'cours_creation' %}">Créer un cours</a>
+        <div id="linkContainer">
+            <div class="link insideContainer">
+                <a href="{% url 'cours_creation' %}">Créer un cours</a>
+            </div>
         </div>
         {% endif %}
     </div>
     {% for cours in list %}
-    <div id="{{ cours.id }}" class="cours_list">
+    <div class="cours_list">
         <h2>
             {{ cours.name }}{% if cours.published == False %} (non publié!){% endif %}
         </h2>
@@ -28,7 +34,6 @@
             <div class="coursOptions">
                 <form class="user" method="post">
                     {% csrf_token %}
-                    <button class="coursIndexBTN" type="submit" name="modify" value="{{ cours.id }}">Modifier</button>
                     {% if cours.published %}
                     <button class="coursIndexBTN" type="submit" name="unpublished" value="{{ cours.id }}">Dépublier</button>
                     {% else %}
@@ -42,18 +47,4 @@
     </div>
     {% endfor %}
 </div>
-<div>
-    pages: {% for num_page in list.paginator.page_range %} <a href="?page={{num_page}}">{{num_page}}</a>
-    {% endfor %}
-</div>
-{% if list.has_previous %}
-<div class="pagination">
-    <a href="{% url 'cours_index'%}?page={{ list.previous_page_number }}">page précédente</a>
-</div>
-{% endif %}
-{% if list.has_next %}
-<div class="pagination">
-    <a href="{% url 'cours_index'%}?page={{ list.next_page_number }}">page suivante</a>
-</div>
-{% endif %}
 {% endblock %}

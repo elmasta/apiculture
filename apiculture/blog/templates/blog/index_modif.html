@@ -1,0 +1,35 @@
+{% extends 'blog/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="container" id="userAdmnCont">
+    <div class="cours_list whiteL">
+        <h1 class="interline">Changer la présentation du site:</h1>
+        <form class="user" method="post" style="width:90%">
+            {% csrf_token %}
+            <div class="interline">
+                <label for="{{ form_intro.description.id_for_label }}">Présentation du site:</label>
+                {{ form_intro.description }}
+            </div>
+            <div class="interline">
+                <button class="coursIndexBTN" type="submit" name="intro" value="intro">Enregistrer</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="cours_list whiteL">
+        <h1 class="interline">Changer la présentation d'accès aux cours:</h1>
+        <form class="user" method="post" style="width:90%">
+            {% csrf_token %}
+            <div class="interline">
+                <label for="{{ form_desc.description.id_for_label }}">Présentation d'accès aux cours:</label>
+                {{ form_desc.description }}
+            </div>
+            <div class="interline">
+                <button class="coursIndexBTN" type="submit" name="desc" value="desc">Enregistrer</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

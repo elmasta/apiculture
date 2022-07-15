@@ -3,22 +3,24 @@
 {% load static %}
 
 {% block content %}
-<div>
-    <h1>Connectez vous!</h1>
+<div class="container" id="userAdmnCont">
+    <div class="line lone whiteL userAdmn" style="width:60%">
+        <h2 class="interline">Connectez vous!</h2>
+        <form class="interline" method="post">
+            {% csrf_token %}
+            <div class="interline">
+                <label for="{{ form.username.id_for_label }}">Pseudo:</label>
+                {{ form.username }}
+            </div>
+            <div class="interline">
+                <label for="{{ form.password.id_for_label }}">Mot de passe:</label>
+                {{ form.password }}
+            </div>
+            <button class="coursIndexBTN interline" type="submit">Se connecter</button>
+        </form>
+        {% if errors %}
+        <div class="interline" style="color: red;">{{ errors }}</div>
+        {% endif %}
+    </div>
 </div>
-<form class="user" method="post">
-    {% csrf_token %}
-    <div>
-        <label for="{{ form.username.id_for_label }}">Pseudo</label>
-        {{ form.username }}
-    </div>
-    <div>
-        <label for="{{ form.password.id_for_label }}">Mot de passe</label>
-        {{ form.password }}
-    </div>
-    <button type="submit">Se connecter</button>
-</form>
-{% if errors %}
-    <div>{{ errors }}</div>
-{% endif %}
 {% endblock %}

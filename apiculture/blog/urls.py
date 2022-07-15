@@ -10,5 +10,8 @@ urlpatterns = [
     path('cours_index/', views.cours_index, name="cours_index"),
     path('cours_creation/', views.cours_creation, name="cours_creation"),
     path('event_admin/', views.event_admin, name="event_admin"),
+    path('event_creation/', views.event_creation, name="event_creation"),
+    path('event_modif/<int:event_id>', views.event_modif, name="event_modif"),
+    path('index_modif', views.index_modif, name="index_modif"),
     path('legal/', views.legal, name="legal"),
 ]

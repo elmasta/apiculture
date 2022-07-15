@@ -23,6 +23,15 @@ class CreationCoursForm(forms.ModelForm):
             "description": forms.TextInput(attrs={"class": "form-control"}),
         }
 
+class EventForm(forms.ModelForm):
+
+    class Meta:
+        model = Event
+        fields = ["name", "description"]
+        widgets = {
+            "name": forms.TextInput(attrs={"class": "form-control"}),
+            "description": SummernoteWidget(attrs={"class": "form-control"}),
+        }
 
 class PasswordChange(forms.Form):
 
@@ -38,3 +47,21 @@ class UserDelete(forms.Form):
 
     password = forms.CharField(widget=forms.PasswordInput(attrs={
         "class": "form-control"}))
+
+class IntroductionForm(forms.ModelForm):
+
+    class Meta:
+        model = Introduction
+        fields = ["description"]
+        widgets = { 
+            "description": SummernoteWidget(attrs={"class": "form-control"})
+        }
+
+class DescriptionForm(forms.ModelForm):
+
+    class Meta:
+        model = Description
+        fields = ["description"]
+        widgets = { 
+            "description": SummernoteWidget(attrs={"class": "form-control"})
+        }

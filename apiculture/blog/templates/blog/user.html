@@ -3,25 +3,35 @@
 {% load static %}
 
 {% block content %}
-<div>
-    <form method="post">
-        {% csrf_token %}
-        <label for="{{ pass_form.old_password.id_for_label }}">Ancien mot de passe:</label>
-        {{ pass_form.old_password }}
-        <label for="{{ pass_form.new_passwor.id_for_label }}">Nouveau mot de passe:</label>
-        {{ pass_form.new_password }}
-        <label for="{{ pass_form.new_password_comf.id_for_label }}">Répétez le nouveau mot de passe:</label>
-        {{ pass_form.new_password_comf }}
-        <button class="coursIndexBTN" type="submit" name="change" value="{{ request.user.id }}">Confirmer</button>
-    </form>
-</div>
-<div>
-    <form method="post">
-        {% csrf_token %}
-        <label for="{{ del_form.password.id_for_label }}">Entrez votre mot de passe:</label>
-        {{ del_form.password }}
-        <button class="coursIndexBTN" type="submit" name="delete" value="{{ request.user.id }}">Confirmer</button>
-    </form>
-    <p style="color:red">Attention, supprimer son compte est définitif!</p>
+<div class="container" id="userAdmnCont">
+    <div class="line lone whiteL userAdmn" style="width:60%">
+        <h2 class="interline">Changer son mot de passe:</h2>
+        <form method="post" class="interline">
+            {% csrf_token %}
+            <div class="interline">
+                <label class="formLabel" for="{{ pass_form.old_password.id_for_label }}">Ancien mot de passe:</label>
+                {{ pass_form.old_password }}
+            </div>
+            <div class="interline">
+                <label class="formLabel" for="{{ pass_form.new_passwor.id_for_label }}">Nouveau mot de passe:</label>
+                {{ pass_form.new_password }}
+            </div>
+            <div class="interline">
+                <label class="formLabel" for="{{ pass_form.new_password_comf.id_for_label }}">Répétez le nouveau mot de passe:</label>
+                {{ pass_form.new_password_comf }}
+            </div>
+            <button class="coursIndexBTN interline" type="submit" name="change" value="{{ request.user.id }}">Confirmer</button>
+        </form>
+    </div>
+    <div class="line lone whiteL userAdmn" style="width:60%">
+        <h2 class="interline">Supprimer son compte:</h2>
+        <form method="post" class="interline">
+            {% csrf_token %}
+            <label class="formLabel" for="{{ del_form.password.id_for_label }}">Entrez votre mot de passe:</label>
+            {{ del_form.password }}
+            <button class="coursIndexBTN" type="submit" name="delete" value="{{ request.user.id }}">Confirmer</button>
+        </form>
+        <h3 class="interline" style="color:red">Attention, supprimer son compte est définitif!</h3>
+    </div>
 </div>
 {% endblock %}

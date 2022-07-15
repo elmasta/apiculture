@@ -20,7 +20,7 @@
         </div>
         {% if request.user.is_superuser %}
         <div class="link">
-            <a href="{% url 'cours_index' %}">Changer la présentation</a>
+            <a href="{% url 'index_modif' %}">Changer la présentation</a>
         </div>
         {% endif %}
     </div>
@@ -36,14 +36,15 @@
             </div>
             {% if request.user.is_superuser %}
             <div class="link insideContainer">
-                <a href="{% url 'cours_index' %}">Changer la description</a>
+                <a href="{% url 'index_modif' %}">Changer la description</a>
             </div>
             {% endif %}
         </div>
     </div>
     <div class="line lone">
         <div id="eventContainer">
-            <h2 class="whiteL" id="eventTitle">Derniers évenements</h2>
+            {% if events %}
+            <h2 class="whiteL" id="eventTitle">Derniers évenements:</h2>
             {% for event in events %}
             <div class="subeventContainer">
                 <div class="eventName">
@@ -54,6 +55,9 @@
                 </div>
             </div>
             {% endfor %}
+            {% else %}
+            <h2 class="whiteL" id="eventTitle">Aucun évènement</h2>
+            {% endif %}
         </div>
         {% if request.user.is_superuser %}
         <div class="link">
