@@ -1,3 +1,3 @@
 # apiculture
 
-forum created by demand using Python/Django
+forum using Python/Django
